@@ -6,18 +6,45 @@ use PHPUnit\Framework\TestCase;
 class MacroableTest extends TestCase {
     use Macroable;
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        static::$macros = [];
+    }
+
     public function test_can_add_new_macroables()
     {
-        static::macro('test', function() {
-            return 'test';
-        });
+        $this->generateMacro();
 
         $this->assertCount(1, static::$macros);
 
-        static::macro('test2', function() {
-            return 'test 2';
-        });
+        $this->generateMacro();
 
         $this->assertCount(2, static::$macros);
+    }
+
+    public function test_can_flush_macros()
+    {
+        $macrosNum = 10;
+
+        $this->generateMacro($macrosNum);
+
+        $this->assertCount($macrosNum, static::$macros);
+
+        static::flushMacros();
+
+        $this->assertCount(0, static::$macros);
+    }
+
+    public function generateMacro($number = 1) {
+        $index = 0;
+
+        while ($index < $number) {
+            static::macro(bin2hex(random_bytes(10)), function() {
+                return 'test';
+            });
+
+            $index++;
+        }
     }
 }

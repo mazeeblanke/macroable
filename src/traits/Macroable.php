@@ -23,5 +23,13 @@ trait Macroable {
         static::$macros[$name] = $callback;
     }
 
-
+    /**
+     * Reset the macros array to empty state
+     *
+     * @return  void
+     */
+    public static function flushMacros(): void
+    {
+        static::$macros = [];
+    }
 }
