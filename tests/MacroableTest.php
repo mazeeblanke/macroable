@@ -58,4 +58,20 @@ class MacroableTest extends TestCase {
             $index++;
         }
     }
+
+    public function test_throws_exception_on_dynamic_call_to_unavailable_macro()
+    {
+        $this->expectException(BadMethodCallException::class);
+
+        $this->testMacro();
+    }
+
+    public function test_can_trigger_macros_dynamically()
+    {
+        static::macro('test', function () {
+            return 'test';
+        });
+
+        $this->assertEquals('test', $this->test());
+    }
 }

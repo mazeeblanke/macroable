@@ -2,6 +2,9 @@
 
 namespace Mazeeblanke\Macroable\traits;
 
+use BadMethodCallException;
+use PhpParser\Node\Expr\Closure;
+
 trait Macroable {
     /**
      * A list of macros
@@ -40,8 +43,33 @@ trait Macroable {
      *
      * @return  bool
      */
-    public function hasMacro(string $macro): bool
+    public static function hasMacro(string $macro): bool
     {
         return isset(static::$macros[$macro]);
+    }
+
+    /**
+     * Handle dynamic calls to class
+     *
+     * @param   string  $method   
+     * @param   array   $parameters 
+     *
+     * @return  mixed 
+     */
+    public function __call(string $method, array $parameters): mixed
+    {
+        if (!static::hasMacro($method)) {
+            throw new BadMethodCallException(sprintf(
+                'Method %s::%s does not exist', static::class, $method
+            )) ;
+        }
+
+        $macro = static::$macros[$method];
+
+        if ($macro instanceof Closure) {
+            $macro = $macro->bindTo($this, static::class);
+        }
+
+        return $macro(...$parameters);
     }
 }
