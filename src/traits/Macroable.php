@@ -32,4 +32,16 @@ trait Macroable {
     {
         static::$macros = [];
     }
+
+    /**
+     * Check if macro exists
+     *
+     * @param   string  $macro
+     *
+     * @return  bool
+     */
+    public function hasMacro(string $macro): bool
+    {
+        return isset(static::$macros[$macro]);
+    }
 }

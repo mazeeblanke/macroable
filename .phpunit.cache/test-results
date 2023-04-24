@@ -1,1 +1,1 @@
-{"version":1,"defects":{"MacroableTest::test_can_add_new_macroables":7,"MacroableTest::test_can_flush_macros":7},"times":{"MacroableTest::test_can_add_new_macroables":0.002,"MacroableTest::test_can_flush_macros":0}}
+{"version":1,"defects":{"MacroableTest::test_can_add_new_macroables":7,"MacroableTest::test_can_flush_macros":7,"MacroableTest::test_macro_check_exist":7},"times":{"MacroableTest::test_can_add_new_macroables":0,"MacroableTest::test_can_flush_macros":0.001,"MacroableTest::test_macro_check_exist":0}}

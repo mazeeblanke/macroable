@@ -36,6 +36,17 @@ class MacroableTest extends TestCase {
         $this->assertCount(0, static::$macros);
     }
 
+    public function test_macro_check_exist()
+    {
+        $this->assertFalse(static::hasMacro('test'));
+
+        static::macro('test', function () {
+            return 'test';
+        });
+
+        $this->assertTrue(static::hasMacro('test'));
+    }
+
     public function generateMacro($number = 1) {
         $index = 0;
 
