@@ -18,8 +18,10 @@ trait Macroable {
      *
      * @return  void
      */
-    protected static function macro(string $name, callable $callback): void
+    public static function macro(string $name, callable $callback): void
     {
         static::$macros[$name] = $callback;
     }
+
+
 }
